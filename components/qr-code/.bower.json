@@ -1,0 +1,13 @@
+{
+  "name": "qr-code",
+  "homepage": "https://github.com/educastellano/qr-code",
+  "_release": "208774a2d2",
+  "_resolution": {
+    "type": "branch",
+    "branch": "gh-pages",
+    "commit": "208774a2d26901a05ece1b621e43f0427b3ead8b"
+  },
+  "_source": "git://github.com/educastellano/qr-code.git",
+  "_target": "gh-pages",
+  "_originalSource": "educastellano/qr-code"
+}
