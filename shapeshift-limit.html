@@ -1,0 +1,17 @@
+<link rel="import" href="components/polymer/polymer.html">
+
+<polymer-element name="shapeshift-limit">
+  <template>
+    <core-ajax id="ajax"
+      auto
+      url="http://cors-anywhere.herokuapp.com/shapeshift.io/limit/btc_ltc"
+      handleAs="json"
+      response="{{limit}}"></core-ajax>
+
+    <span>{{limit.limit}}</span>
+  </template>
+  <script>
+    Polymer({});
+  </script>
+</polymer-element>
+

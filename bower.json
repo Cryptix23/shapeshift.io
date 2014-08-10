@@ -1,0 +1,29 @@
+{
+  "name": "shapeshift.io",
+  "version": "0.0.0",
+  "homepage": "https://github.com/hexorx/shapeshift.io",
+  "authors": [
+    "Josh Robinson <hexorx@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.3.4",
+    "qr-code": "educastellano/qr-code#gh-pages",
+    "core-ajax": "Polymer/core-ajax#~0.3.4",
+    "core-list": "Polymer/core-list#~0.3.5",
+    "core-scaffold": "Polymer/core-scaffold#~0.3.5",
+    "core-pages": "Polymer/core-pages#~0.3.5",
+    "core-menu": "Polymer/core-menu#~0.3.5",
+    "core-item": "Polymer/core-item#~0.3.5",
+    "paper-input": "Polymer/paper-input#~0.3.5",
+    "paper-button": "Polymer/paper-button#~0.3.5"
+  }
+}

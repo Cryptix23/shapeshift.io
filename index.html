@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+
+  <head>
+    <title>ShapeShift.io</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <script src="components/platform/platform.js"></script>
+    <script src="components/qr-code/src/qr.js"></script>
+
+    <link rel="import" href="components/polymer/polymer.html">
+    <link rel="import" href="components/core-scaffold/core-scaffold.html">
+    <link rel="import" href="components/core-header-panel/core-header-panel.html">
+    <link rel="import" href="components/core-pages/core-pages.html">
+    <link rel="import" href="components/core-menu/core-menu.html">
+    <link rel="import" href="components/core-item/core-item.html">
+
+    <link rel="import" href="components/qr-code/src/qr-code.html">
+    <link rel="import" href="shapeshift-transactions.html">
+    <link rel="import" href="shapeshift-shift.html">
+
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        font-family: sans-serif;
+      }
+
+      core-scaffold {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+
+      .container {
+        padding: 1.5em;
+      }
+
+      .content {
+        background-color: #eee;
+        padding: 0px;
+      }
+
+      /* some default styles for mode="cover" on core-scaffold */
+      core-scaffold[mode=cover]::shadow core-header-panel::shadow #mainContainer {
+        left: 120px;
+      }
+
+      core-scaffold[mode=cover] .content {
+        margin: 20px 100px 20px 0;
+      }
+    </style>
+  </head>
+
+  <body unresolved>
+    <core-scaffold>
+      <core-header-panel navigation flex mode="seamed">
+        <core-toolbar style="background-color: #526E9C; color: #fff;">ShapeShift.io</core-toolbar>
+        <core-menu selected="1" on-core-select="{{selectAction}}">
+          <core-item name="dashboard" icon="view-list" label="Dashboard"></core-item>
+          <core-item name="btc-ltc" icon="swap-horiz" label="BTC - LTC"></core-item>
+          <core-item name="ltc-btc" icon="swap-horiz" label="LTC - BTC"></core-item>
+        </core-menu>
+      </core-header-panel>
+
+      <div id="titlebar" tool>Dashboard</div>
+
+      <div class="container" layout vertical>
+        <core-pages class="content" selected="dashboard">
+          <div name="dashboard">
+            <shapeshift-transactions/>
+          </div>
+          <div name="btc-ltc">
+            <shapeshift-shift></shapeshift-shift>
+          </div>
+          <div name="ltc-btc">
+          </div>
+        </core-pages>
+      </div>
+    </core-scaffold>
+
+    <script>
+      var menu = document.querySelector('core-menu');
+      var titlebar = document.querySelector('#titlebar');
+      var content = document.querySelector('core-pages');
+      menu.addEventListener('core-select', function(){
+        var selected = menu.selectedItem;
+        if (selected) {
+          titlebar.textContent = selected.getAttribute('label');
+          content.selected = selected.getAttribute('name');
+          console.log(content.selected);
+        }
+      });
+    </script>
+  </body>
+</html>

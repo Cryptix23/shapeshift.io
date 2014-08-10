@@ -1,0 +1,44 @@
+<link rel="import" href="components/core-ajax/core-ajax.html">
+<link rel="import" href="components/core-list/core-list.html">
+
+<polymer-element name="shapeshift-transactions">
+  <template>
+    <style>
+      .item {
+        box-sizing: border-box;
+        height: 60px;
+        border-bottom: 1px solid #ddd;
+        padding: 10px 15px;
+        cursor: default;
+        background-color: white;
+        overflow: hidden;
+      }
+
+      .message {
+        font-size: 1.2em;
+        line-height: 40px;
+      }
+    </style>
+    <core-ajax id="ajax"
+      auto
+      url="http://cors-anywhere.herokuapp.com/shapeshift.io/recenttx/5"
+      handleAs="json"
+      response="{{transactions}}"></core-ajax>
+
+    <shapeshift-card>
+      <template repeat="{{transactions}}">
+        <div class="item {{ {selected: selected} | tokenList }}">
+          <div class="message">
+            <span class="shift-litecoin"></span>
+            {{amount}} {{curIn}} to {{curOut}}
+          </div>
+        </div>
+      </template>
+    </shapeshift-card>
+
+  </template>
+  <script>
+    (function() { Polymer('shapeshift-transactions', { }); })();
+  </script>
+</polymer-element>
+
