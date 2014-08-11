@@ -1,0 +1,39 @@
+<link rel="import" href="components/polymer/polymer.html">
+<link rel="import" href="components/core-pages/core-pages.html">
+
+<polymer-element name="shapeshift-transaction" attributes="address">
+  <template>
+    <core-ajax id="ajax"
+      auto
+      url="http://cors-anywhere.herokuapp.com/shapeshift.io/txStat/{{address}}"
+      handleAs="json"
+      response="{{transaction}}"
+      on-core-response="{{handleResponse}}"></core-ajax>
+
+    <div name="loading" hidden?="{{transaction.status !== 'loading'}}">
+      <h3>Loading</h3>
+    </div>
+    <div name="no_deposits" hidden?="{{transaction.status !== 'no_deposits'}}">
+      <h3>No Deposits</h3>
+    </div>
+    <div name="received" hidden?="{{transaction.status !== 'received'}}">
+      <h3>Received</h3>
+    </div>
+    <div name="complete" hidden?="{{transaction.status !== 'complete'}}">
+      <h3>Completed</h3>
+    </div>
+    <div name="failed" hidden?="{{transaction.status !== 'failed'}}">
+      <h3>Failed</h3>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      handleResponse: function () {
+        console.log(this.transaction);
+      },
+      refresh: function () {
+        this.$.ajax.go();
+      }
+    });
+  </script>
+</polymer-element>

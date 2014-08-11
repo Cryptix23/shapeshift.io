@@ -1,12 +1,16 @@
+<script src="components/qr-code/src/qr.js"></script>
+
 <link rel="import" href="components/core-ajax/core-ajax.html">
+<link rel="import" href="components/qr-code/src/qr-code.html">
 <link rel="import" href="components/paper-input/paper-input.html">
 <link rel="import" href="components/paper-button/paper-button.html">
 
 <link rel="import" href="shapeshift-card.html">
 <link rel="import" href="shapeshift-rate.html">
 <link rel="import" href="shapeshift-limit.html">
+<link rel="import" href="shapeshift-transaction.html">
 
-<polymer-element name="shapeshift-shift">
+<polymer-element name="shapeshift-shift" attributes="pair">
   <template>
     <style>
       paper-input {
@@ -19,12 +23,6 @@
         fill: #4285f4;
       }
 
-      shapeshift-card {
-        box-sizing: border-box;
-        padding: 1em 1.5em;
-        margin-bottom: 1em;
-      }
-
       .error {
         color: red;
         background-color: pink;
@@ -35,6 +33,7 @@
       url="http://cors-anywhere.herokuapp.com/shapeshift.io/shift"
       handleAs="json"
       method="POST"
+      contentType="application/json"
       response="{{shift}}"></core-ajax>
 
 
@@ -42,39 +41,61 @@
       {{shift.error}}
     </shapeshift-card>
 
-    <shapeshift-card>
-      Exchange Rate: <shapeshift-rate></shapeshift-rate>
-    </shapeshift-card>
+    <div horizontal layout>
+      <shapeshift-card flex>
+        Exchange Rate: <shapeshift-rate pair="{{pair}}"></shapeshift-rate>
+      </shapeshift-card>
 
-    <shapeshift-card>
-      Deposit Limit: <shapeshift-limit></shapeshift-limit>
-    </shapeshift-card>
+      <shapeshift-card flex>
+        Deposit Limit: <shapeshift-limit pair="{{pair}}"></shapeshift-limit>
+      </shapeshift-card>
+    </div>
 
-    <shapeshift-card>
-      <div horizontal layout center>
-        <paper-input  value="{{withdrawal}}" label="Withdraw Address" flex></paper-input>
-        <paper-button label="Start" on-click="{{newShift}}"></paper-button>
-      </div>
-    </shapeshift-card>
+    <div horizontal layout hidden?="{{!shift.deposit}}">
+      <shapeshift-card vertical layout center>
+        <qr-code data="{{shift.deposit}}"></qr-code>
+        {{shift.deposit}}
+      </shapeshift-card>
+    </div>
+
+    <div horizontal layout hidden?="{{!shift.deposit}}">
+      <shapeshift-card>
+        <paper-button label="Refresh" on-click="{{refresh}}"></paper-button>
+        <paper-button label="Reset" on-click="{{reset}}"></paper-button>
+        <shapeshift-transaction id="transaction" address="{{shift.withdrawal}}"></shapeshift-transaction>
+      </shapeshift-card>
+    </div>
+
+    <div horizontal layout hidden?="{{shift.deposit}}">
+      <shapeshift-card>
+        <div horizontal layout center>
+          <paper-input  value="{{withdrawal}}" label="Withdraw Address" flex></paper-input>
+          <paper-button label="Start" on-click="{{newShift}}"></paper-button>
+        </div>
+      </shapeshift-card>
+    </div>
 
   </template>
   <script>
-    (function() { Polymer('shapeshift-shift', {
+    (function() {
+      Polymer('shapeshift-shift', {
         ready: function() {
-          this.shift = {
-            "withdrawal": "L32uKeokaoekaoek",
-            "withdrawalType": "LTC"
-          };
         },
         newShift: function() {
           var data = {
             "withdrawal": this.withdrawal,
-            "pair": "btc_ltc"
+            "pair": this.pair
           };
           this.$.ajax.body = JSON.stringify(data);
           this.$.ajax.go();
-          console.log(this.$.ajax.body);
+        },
+        reset: function () {
+          this.shift = {};
+        },
+        refresh: function () {
+          this.$.transaction.refresh()
         }
-    }); })();
+      });
+    })();
   </script>
 </polymer-element>

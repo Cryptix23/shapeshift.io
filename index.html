@@ -9,7 +9,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
 
     <script src="components/platform/platform.js"></script>
-    <script src="components/qr-code/src/qr.js"></script>
 
     <link rel="import" href="components/polymer/polymer.html">
     <link rel="import" href="components/core-scaffold/core-scaffold.html">
@@ -18,7 +17,6 @@
     <link rel="import" href="components/core-menu/core-menu.html">
     <link rel="import" href="components/core-item/core-item.html">
 
-    <link rel="import" href="components/qr-code/src/qr-code.html">
     <link rel="import" href="shapeshift-transactions.html">
     <link rel="import" href="shapeshift-shift.html">
 
@@ -41,7 +39,7 @@
       }
 
       .container {
-        padding: 1.5em;
+        padding: 0.5em;
       }
 
       .content {
@@ -79,9 +77,10 @@
             <shapeshift-transactions/>
           </div>
           <div name="btc-ltc">
-            <shapeshift-shift></shapeshift-shift>
+            <shapeshift-shift pair="btc_ltc"></shapeshift-shift>
           </div>
           <div name="ltc-btc">
+            <shapeshift-shift pair="ltc_btc"></shapeshift-shift>
           </div>
         </core-pages>
       </div>
@@ -96,7 +95,6 @@
         if (selected) {
           titlebar.textContent = selected.getAttribute('label');
           content.selected = selected.getAttribute('name');
-          console.log(content.selected);
         }
       });
     </script>
