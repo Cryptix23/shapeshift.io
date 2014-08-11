@@ -1,10 +1,10 @@
 <link rel="import" href="components/polymer/polymer.html">
 
-<polymer-element name="shapeshift-limit">
+<polymer-element name="shapeshift-limit" attributes="pair">
   <template>
     <core-ajax id="ajax"
       auto
-      url="http://cors-anywhere.herokuapp.com/shapeshift.io/limit/btc_ltc"
+      url="http://cors-anywhere.herokuapp.com/shapeshift.io/limit/{{pair}}"
       handleAs="json"
       response="{{limit}}"></core-ajax>
 
